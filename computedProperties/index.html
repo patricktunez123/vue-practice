@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="app">
+      <section>
+        <h1 class="text-2xl mb-4" v-show="InProgress.length !== 0">
+          In progress
+        </h1>
+        <ul v-for="Task in InProgress" :key="Task.id">
+          <label>
+            <li>
+              {{Task.name}}
+              <input type="checkbox" v-model="Task.complete" />
+            </li>
+          </label>
+        </ul>
+      </section>
+
+      <section class="mt-4">
+        <h1 class="text-2xl mb-4" v-show="DoneTasks.length !== 0">Done</h1>
+        <ul v-for="Task in DoneTasks" :key="Task.id">
+          <label>
+            <li>
+              {{Task.name}}
+              <input type="checkbox" v-model="Task.complete" />
+            </li>
+          </label>
+        </ul>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    const app = {
+      data() {
+        return {
+          Tasks: [
+            {
+              id: 1,
+              name: "Task one",
+              complete: false,
+            },
+            {
+              id: 2,
+              name: "Task two",
+              complete: false,
+            },
+            {
+              id: 3,
+              name: "Task three",
+              complete: false,
+            },
+          ],
+        };
+      },
+      computed: {
+        DoneTasks() {
+          return this.Tasks.filter((item) => item.complete);
+        },
+        InProgress() {
+          return this.Tasks.filter((item) => !item.complete);
+        },
+      },
+    };
+
+    Vue.createApp(app).mount("#app");
+  </script>
+</html>
